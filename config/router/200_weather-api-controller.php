@@ -7,7 +7,7 @@ return [
         [
             "info" => "Get weather info from API",
             "mount" => "weatherApi",
-            "handler" => "\Anax\Geo\WeatherApiController",
+            "handler" => "\Magm19\Geo\WeatherApiController",
         ],
     ]
 ];

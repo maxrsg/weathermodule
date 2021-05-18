@@ -4,7 +4,7 @@ namespace Magm19\Geo;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
-use Anax\Geo\WeatherApiController;
+use Magm19\Geo\WeatherApiController;
 
 /**
  * Testclass.

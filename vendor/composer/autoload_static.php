@@ -165,6 +165,7 @@ class ComposerStaticInit88771f8ddfe15ed15e1f22a05d03eba5
         'CImage' => __DIR__ . '/..' . '/mos/cimage/CImage.php',
         'CRemoteImage' => __DIR__ . '/..' . '/mos/cimage/CRemoteImage.php',
         'CWhitelist' => __DIR__ . '/..' . '/mos/cimage/CWhitelist.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'PHPUnit\\Exception' => __DIR__ . '/..' . '/phpunit/phpunit/src/Exception.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/Assert.php',
         'PHPUnit\\Framework\\AssertionFailedError' => __DIR__ . '/..' . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',

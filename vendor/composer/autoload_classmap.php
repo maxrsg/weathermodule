@@ -13,6 +13,7 @@ return array(
     'CImage' => $vendorDir . '/mos/cimage/CImage.php',
     'CRemoteImage' => $vendorDir . '/mos/cimage/CRemoteImage.php',
     'CWhitelist' => $vendorDir . '/mos/cimage/CWhitelist.php',
+    'Composer\\InstalledVersions' => $vendorDir . '/composer/InstalledVersions.php',
     'PHPUnit\\Exception' => $vendorDir . '/phpunit/phpunit/src/Exception.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/Framework/Assert.php',
     'PHPUnit\\Framework\\AssertionFailedError' => $vendorDir . '/phpunit/phpunit/src/Framework/AssertionFailedError.php',
