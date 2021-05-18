@@ -1,5 +1,5 @@
 {
-    "name" : "magm19/weather",
+    "name" : "magm19/weathermodule",
     "description": "Anax weather service module",
     "license": "MIT",
     "minimum-stability": "beta",
