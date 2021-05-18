@@ -1,0 +1,29 @@
+{
+    "name" : "anax/proxy",
+    "description": "Anax Proxy module, for static access to di service container.",
+    "homepage": "https://github.com/canax/proxy",
+    "license": "MIT",
+    "keywords": ["Anax", "Framework", "Proxy_pattern", "Facade_pattern"],
+    "authors": [
+        {
+            "name": "Mikael Roos",
+            "email": "mos@dbwebb.se"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/canax/proxy/issues",
+        "source": "https://github.com/canax/proxy"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Anax\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.2"
+    },
+    "require-dev": {
+        "anax/di": "^2.0.0",
+        "phpunit/phpunit": "^7"
+    }
+}

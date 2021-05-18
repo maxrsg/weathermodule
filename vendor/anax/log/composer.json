@@ -1,0 +1,31 @@
+{
+    "name" : "anax/log",
+    "description": "Anax Log module, for logging like PSR-3.",
+    "homepage": "https://github.com/canax/log",
+    "license": "MIT",
+    "keywords": ["Anax", "Framework"],
+    "authors": [
+        {
+            "name": "Mikael Roos",
+            "email": "mos@dbwebb.se"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/canax/log/issues",
+        "source": "https://github.com/canax/log"
+    },
+    "autoload": {
+        "psr-4": { 
+            "Anax\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.2",
+        "psr/log": "^1"
+    },
+    "require-dev": {
+        "anax/commons": "^2.0.0@beta",
+        "anax/di": "^2.0.0@beta",
+        "phpunit/phpunit": "^7"
+    }
+}

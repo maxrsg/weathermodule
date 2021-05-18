@@ -1,0 +1,59 @@
+{
+    "name" : "anax/anax",
+    "description": "The Anax framework, all included.",
+    "homepage": "https://github.com/canax/anax",
+    "license": "MIT",
+    "keywords": ["Anax", "Framework"],
+    "authors": [
+        {
+            "name": "Mikael Roos",
+            "email": "mos@dbwebb.se"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/canax/anax/issues",
+        "source": "https://github.com/canax/anax"
+    },
+    "autoload": {
+        "psr-4": {"Anax\\": "src/"}
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "composer run-script scaffold-all"
+        ],
+        "scaffold-all": [
+            "bash .anax/anax.bash --no-composer-install scaffold theme cimage"
+        ]
+    },
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.2",
+        "anax/cache": "^2.0.0-beta.5",
+        "anax/commons": "^2.0.12",
+        "anax/configure": "^2.0.0-beta.1",
+        "anax/content": "^2.0.0-beta.5",
+        "anax/controller": "^2.0.0-beta.1",
+        "anax/database": "^2.2.1",
+        "anax/database-active-record": "^2.0.4",
+        "anax/database-query-builder": "^2.0.4",
+        "anax/di": "^2.0.4",
+        "anax/log": "^2.0.0-beta.3",
+        "anax/navigation": "^2.0.0",
+        "anax/page": "^2.0.0-beta.1",
+        "anax/proxy": "^1.0.2",
+        "anax/request": "^2.0.2",
+        "anax/response": "^2.0.1",
+        "anax/router": "^2.0.0",
+        "anax/session": "^2.0.1",
+        "anax/textfilter": "^1.2.5",
+        "anax/url": "^2.0.0-beta.2",
+        "anax/view": "^2.0.2",
+        "mos/cimage": "^0.7.20",
+        "symfony/yaml": "^3.4.0"
+    },
+    "require-dev": {
+        "phpstan/phpstan": "^0.12",
+        "phpunit/phpunit": "^8"
+    }
+}

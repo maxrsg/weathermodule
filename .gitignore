@@ -1,0 +1,8 @@
+/.bin
+/build
+/vendor
+memory::
+composer.lock
+/config/api/ipstack.txt
+/config/api/openweather.txt
+/a
