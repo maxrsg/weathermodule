@@ -9,7 +9,7 @@
 rsync -av vendor/magm19/weathermodule/config ./
 
 # Copy the src files
-rsync -av vendor/magm19/weathermodule/src/ ./
+rsync -av vendor/magm19/weathermodule/src ./
 
 # Copy the view files
 rsync -av vendor/magm19/weathermodule/view ./
