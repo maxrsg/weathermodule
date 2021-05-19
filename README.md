@@ -23,7 +23,7 @@ If you prefer you could also run the commands by hand:
 <pre>
 rsync -av vendor/magm19/weathermodule/config ./
 
-rsync -av vendor/magm19/weathermodule/src/ ./
+rsync -av vendor/magm19/weathermodule/src ./
 
 rsync -av vendor/magm19/weathermodule/view ./
 
