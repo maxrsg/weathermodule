@@ -24,7 +24,6 @@ class WeatherModel
     public function getForecast($lat, $lon)
     {
         $url = "http://api.openweathermap.org/data/2.5/onecall?lat=" . $lat . "&lon=" . $lon . "&units=metric&exclude=minutely,hourly" ."&appid=" . $this->apiKey;
-        $data = file_get_contents($url);
         $curlHandle = curl_init();
         curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlHandle, CURLOPT_URL, $url);

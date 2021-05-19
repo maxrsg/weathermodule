@@ -6,13 +6,13 @@
 #
 
 # Copy the configuration files
-rsync -av vendor/magm19/weathermodule/config ./config/
+rsync -av vendor/magm19/weathermodule/config ./
 
 # Copy the src files
-rsync -av vendor/magm19/weathermodule/src ./src/
+rsync -av vendor/magm19/weathermodule/src/ ./
 
 # Copy the view files
-rsync -av vendor/magm19/weathermodule/view ./view/
+rsync -av vendor/magm19/weathermodule/view ./
 
 # Copy the test files
-rsync -av vendor/magm19/weathermodule/test ./test/
+rsync -av vendor/magm19/weathermodule/test ./
