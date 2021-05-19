@@ -86,7 +86,7 @@ class WeatherApiController implements ContainerInjectableInterface
                 "error" => "Something went wrong :("
             ];
         }
-        return [$json];
+        return [$json ?? ""];
     }
 
 
