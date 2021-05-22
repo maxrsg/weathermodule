@@ -1,5 +1,0 @@
-.phpunit.result.cache
-.bin/
-build/
-composer.lock
-vendor/
