@@ -1,4 +1,6 @@
 # Weathermodule
+[![Build Status](https://www.travis-ci.com/maxrsg/weathermodule.svg?branch=main)](https://www.travis-ci.com/maxrsg/weathermodule)
+<br>
 A module for the anax framework that allows you to check weather data for specific locations. Made as a part of the course
 ramverk1 at Blekinge Institude of Technology.
 
