@@ -92,15 +92,22 @@ class WeatherApiController implements ContainerInjectableInterface
 
 
     /**
-     *
+     * Get weather data from lat and lon values.
+     * @return array
      */
-    public function getDataFromLocation($lat, $lon)
+    public function getDataFromLocation($lat, $lon, $fData = null, $hData = null)
     {
         $weatherModel = $this->di->get("weather");
-        $weatherModel->getHistory($lat, $lon);
-        $weatherModel->getForecast($lat, $lon);
-        $historicalData = $weatherModel->getHistoricalData();
-        $forecastData = $weatherModel->getForecastData();
+        if (!isset($fData)) {
+            $weatherModel->getForecast($lat, $lon);
+            $forecastData = $weatherModel->getForecastData();
+        } else if (!isset($hData)) {
+            $weatherModel->getHistory($lat, $lon);
+            $historicalData = $weatherModel->getHistoricalData();
+        } else {
+            $forecastData = $fData;
+            $historicalData = $hData;
+        }
 
         if (isset($historicalData[0]->cod) || isset($forecastData->cod)) {
             $json = [
@@ -123,7 +130,7 @@ class WeatherApiController implements ContainerInjectableInterface
     /**
      *
      */
-    public function getDataFromIp($ipAddr)
+    public function getDataFromIp($ipAddr, $fData = null, $hData = null)
     {
         $ipModel = $this->di->get("geoIp");
         if ($ipModel->validateIp($ipAddr)) { // if ip is valid
@@ -132,10 +139,16 @@ class WeatherApiController implements ContainerInjectableInterface
                 $res = $ipModel->getData();
                 if ($res->latitude && $res->longitude) {
                     $weatherModel = $this->di->get("weather");
-                    $weatherModel->getHistory($res->latitude, $res->longitude);
-                    $weatherModel->getForecast($res->latitude, $res->longitude);
-                    $historicalData = $weatherModel->getHistoricalData();
-                    $forecastData = $weatherModel->getForecastData();
+                    if (!isset($fData)) {
+                        $weatherModel->getForecast($res->latitude, $res->longitude);
+                        $forecastData = $weatherModel->getForecastData();
+                    } else if (!isset($hData)) {
+                        $weatherModel->getHistory($res->latitude, $res->longitude);
+                        $historicalData = $weatherModel->getHistoricalData();
+                    } else {
+                        $forecastData = $fData;
+                        $historicalData = $hData;
+                    }
 
                     if (isset($historicalData[0]->cod) || isset($forecastData->cod)) {
                         $json = [

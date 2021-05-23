@@ -13,7 +13,9 @@ class WeatherApiControllerTest extends TestCase
 {
     // Create the di container.
     protected $di;
-
+    private $forecastData;
+    private $historicalData;
+    private $errorObject;
 
 
     /**
@@ -29,27 +31,16 @@ class WeatherApiControllerTest extends TestCase
 
         // Use a different cache dir for unit test
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
-
         $this->di = $di;
-    }
 
+        // Setup weather data to be used in tests
+        $this->forecastData = file_get_contents(ANAX_INSTALL_PATH . "/test/data/forecast.json");
+        $this->historicalData = file_get_contents(ANAX_INSTALL_PATH . "/test/data/historical.json");
 
-
-    /**
-     * send http post request with curl
-     */
-    private function sendPostRequest($body)
-    {
-        $url = "http://www.student.bth.se/~magm19/dbwebb-kurser/ramverk1/me/redovisa/htdocs/weatherApi";
-        $curlHandle = curl_init($url);
-        curl_setopt($curlHandle, CURLOPT_POST, true);
-        curl_setopt($curlHandle, CURLOPT_POSTFIELDS, json_encode($body));
-        curl_setopt($curlHandle, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
-        curl_setopt($curlHandle, CURLOPT_RETURNTRANSFER, true);
-        $res = curl_exec($curlHandle);
-        curl_close($curlHandle);
-
-        return $res;
+        // Setup error object that would be given by model class if location data was wrong
+        $this->errorObject = new \stdClass();
+        $this->errorObject->cod = "400";
+        $this->errorObject->message = "wrong latitude";
     }
 
 
@@ -90,53 +81,53 @@ class WeatherApiControllerTest extends TestCase
     /**
      * Test sending a http post to the api and check if the result is correct
      */
-    public function testPostLocationData()
-    {
-        // Setup of the controller
-        $controller = new WeatherApiController();
-        $controller->setDI($this->di);
+    // public function testPostLocationData()
+    // {
+    //     // Setup of the controller
+    //     $controller = new WeatherApiController();
+    //     $controller->setDI($this->di);
 
-        // data to send
-        $lat = "56.16122055053711";
-        $lon = "15.586899757385254";
-        $body = [
-            "latitude" => $lat,
-            "longitude" => $lon,
-        ];
+    //     // data to send
+    //     $lat = "56.16122055053711";
+    //     $lon = "15.586899757385254";
+    //     $body = [
+    //         "latitude" => $lat,
+    //         "longitude" => $lon,
+    //     ];
 
-        $res = $this->sendPostRequest($body);
+    //     $res = $this->sendPostRequest($body);
 
 
-        $weatherModel = $this->di->get("weather");
-        $weatherModel->getForecast($lat, $lon);
-        $weatherModel->getHistory($lat, $lon);
+    //     $weatherModel = $this->di->get("weather");
+    //     $weatherModel->getForecast($lat, $lon);
+    //     $weatherModel->getHistory($lat, $lon);
 
-        $historicalData = $weatherModel->getHistoricalData();
-        $expectedHistorical = $weatherModel->formatHistorical($historicalData);
-        $forecastData = $weatherModel->getForecastData();
-        $expectedForecast = $weatherModel->formatForecast($forecastData);
-        $expected = json_encode([
-            "Forecast" => $expectedForecast,
-            "Historical" => $expectedHistorical
-        ]);
+    //     $historicalData = $weatherModel->getHistoricalData();
+    //     $expectedHistorical = $weatherModel->formatHistorical($historicalData);
+    //     $forecastData = $weatherModel->getForecastData();
+    //     $expectedForecast = $weatherModel->formatForecast($forecastData);
+    //     $expected = json_encode([
+    //         "Forecast" => $expectedForecast,
+    //         "Historical" => $expectedHistorical
+    //     ]);
 
-        $res = str_replace(
-            array("\n", " "),
-            '',
-            $res
-        );
-        $res = str_replace(
-            array("m/s"),
-            'm\/s',
-            $res
-        );
-        $expected = str_replace(
-            array(' '),
-            '',
-            $expected
-        );
-        $this->assertEquals($expected, $res);
-    }
+    //     $res = str_replace(
+    //         array("\n", " "),
+    //         '',
+    //         $res
+    //     );
+    //     $res = str_replace(
+    //         array("m/s"),
+    //         'm\/s',
+    //         $res
+    //     );
+    //     $expected = str_replace(
+    //         array(' '),
+    //         '',
+    //         $expected
+    //     );
+    //     $this->assertEquals($expected, $res);
+    // }
 
 
 
@@ -152,24 +143,21 @@ class WeatherApiControllerTest extends TestCase
         // data to send
         $lat = "56.16122055053711";
         $lon = "15.586899757385254";
+        $forecastData = json_decode($this->forecastData);
+        $historicalData = json_decode($this->historicalData);
 
         // gets the expected output from model class
         $weatherModel = $this->di->get("weather");
-        $weatherModel->getForecast($lat, $lon);
-        $weatherModel->getHistory($lat, $lon);
-        $historicalData = $weatherModel->getHistoricalData();
-        $expectedHistorical = $weatherModel->formatHistorical($historicalData);
-        $forecastData = $weatherModel->getForecastData();
         $expectedForecast = $weatherModel->formatForecast($forecastData);
-        $expected = json_encode([
+        $expectedHistorical = $weatherModel->formatHistorical($historicalData);
+        $expected = [
             "Forecast" => $expectedForecast,
             "Historical" => $expectedHistorical
-        ]);
-        // $this->assertEquals($resHistorical, $expectedHistorical);
+        ];
 
-        $res = $controller->getDataFromLocation($lat, $lon);
+        $res = $controller->getDataFromLocation($lat, $lon, $forecastData, $historicalData);
 
-        $this->assertEquals(json_encode($res), $expected);
+        $this->assertEquals($expected, $res);
     }
 
 
@@ -184,8 +172,16 @@ class WeatherApiControllerTest extends TestCase
         $controller->setDI($this->di);
 
         // data to send
-        $lat = "abc";
-        $lon = "abc";
+        $lat = null;
+        $lon = null;
+        $fData= $this->errorObject;
+        $hData = [
+            $this->errorObject,
+            $this->errorObject,
+            $this->errorObject,
+            $this->errorObject,
+            $this->errorObject
+        ];
 
         // expected output
         $expected = [
@@ -193,7 +189,7 @@ class WeatherApiControllerTest extends TestCase
         ];
 
         //call the method
-        $res = $controller->getDataFromLocation($lat, $lon);
+        $res = $controller->getDataFromLocation($lat, $lon, $fData, $hData);
 
         $this->assertEquals($expected, $res);
     }
@@ -218,7 +214,7 @@ class WeatherApiControllerTest extends TestCase
         ];
 
         //call the method
-        $res = $controller->getDataFromIp($ipAddr);
+        $res = $controller->getDataFromIp($ipAddr, "test", "test");
 
         $this->assertEquals($expected, $res);
     }
@@ -243,7 +239,7 @@ class WeatherApiControllerTest extends TestCase
         ];
 
         //call the method
-        $res = $controller->getDataFromIp($ipAddr);
+        $res = $controller->getDataFromIp($ipAddr, "test", "test");
 
         $this->assertEquals($expected, $res);
     }
@@ -261,30 +257,20 @@ class WeatherApiControllerTest extends TestCase
 
         // data to send
         $ipAddr = "194.47.150.9";
+        $forecastData = json_decode($this->forecastData);
+        $historicalData = json_decode($this->historicalData);
 
-        // get lat and lon values from GeoModel class
-        $geoModel = $this->di->get("geoIp");
-        $geoModel->getDataFromApi($ipAddr);
-        $ipData = $geoModel->getData();
-        $lat = $ipData->latitude;
-        $lon = $ipData->longitude;
-
-        // get expected output from model class
         $weatherModel = $this->di->get("weather");
-        $weatherModel->getForecast($lat, $lon);
-        $weatherModel->getHistory($lat, $lon);
-        $historicalData = $weatherModel->getHistoricalData();
-        $expectedHistorical = $weatherModel->formatHistorical($historicalData);
-        $forecastData = $weatherModel->getForecastData();
         $expectedForecast = $weatherModel->formatForecast($forecastData);
-        $expected = json_encode([
+        $expectedHistorical = $weatherModel->formatHistorical($historicalData);
+        $expected = [
             "Forecast" => $expectedForecast,
             "Historical" => $expectedHistorical
-        ]);
+        ];
 
         //call the method
-        $res = $controller->getDataFromIp($ipAddr);
+        $res = $controller->getDataFromIp($ipAddr, $forecastData, $historicalData);
 
-        $this->assertEquals($expected, json_encode($res));
+        $this->assertEquals($expected, $res);
     }
 }

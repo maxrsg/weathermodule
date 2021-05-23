@@ -95,13 +95,18 @@ class WeatherController implements ContainerInjectableInterface
     /**
      *
      */
-    public function getDataFromLocation($lat, $lon)
+    public function getDataFromLocation($lat, $lon, $fData = null, $hData = null)
     {
-        $weatherModel = $this->di->get("weather");
-        $weatherModel->getHistory($lat, $lon);
-        $weatherModel->getForecast($lat, $lon);
-        $historicalData = $weatherModel->getHistoricalData();
-        $forecastData = $weatherModel->getForecastData();
+        if (!isset($fData) || !isset($hData)) {
+            $weatherModel = $this->di->get("weather");
+            $weatherModel->getHistory($lat, $lon);
+            $weatherModel->getForecast($lat, $lon);
+            $historicalData = $weatherModel->getHistoricalData();
+            $forecastData = $weatherModel->getForecastData();
+        } else {
+            $historicalData = $hData;
+            $forecastData = $fData;
+        }
 
         // check if responses from api contains error code
         if (isset($historicalData[0]->cod) || isset($forecastData->cod)) {
