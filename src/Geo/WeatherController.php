@@ -109,6 +109,7 @@ class WeatherController implements ContainerInjectableInterface
         }
 
         // check if responses from api contains error code
+        $weather = array();
         if (isset($historicalData[0]->cod) || isset($forecastData->cod)) {
             $error = "No weather data for location found!";
         } else {
@@ -137,6 +138,7 @@ class WeatherController implements ContainerInjectableInterface
                     $historicalData = $weatherModel->getHistoricalData();
                     $forecastData = $weatherModel->getForecastData();
 
+                    $weather = array();
                     if (isset($historicalData[0]->cod) || isset($forecastData->cod)) {
                         $error = "No weather data for location found!";
                     } else {

@@ -2,13 +2,6 @@ language: php
 
 php:
     - "7.4"
-    - hhvm
-    - nightly
-
-matrix:
-    allow_failures:
-        - php: nightly
-        - php: hhvm
 
 sudo: false
 

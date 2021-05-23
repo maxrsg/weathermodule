@@ -29,7 +29,10 @@ class WeatherModel
         curl_setopt($curlHandle, CURLOPT_URL, $url);
         $data = curl_exec($curlHandle);
         curl_close($curlHandle);
-        $this->forecastData = json_decode($data);
+
+        if (is_string($data)) {
+            $this->forecastData = json_decode($data);
+        }
     }
 
 

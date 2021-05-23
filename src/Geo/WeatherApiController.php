@@ -98,11 +98,10 @@ class WeatherApiController implements ContainerInjectableInterface
     public function getDataFromLocation($lat, $lon, $fData = null, $hData = null)
     {
         $weatherModel = $this->di->get("weather");
-        if (!isset($fData)) {
+        if (!isset($fData) || !isset($hData)) {
             $weatherModel->getForecast($lat, $lon);
-            $forecastData = $weatherModel->getForecastData();
-        } else if (!isset($hData)) {
             $weatherModel->getHistory($lat, $lon);
+            $forecastData = $weatherModel->getForecastData();
             $historicalData = $weatherModel->getHistoricalData();
         } else {
             $forecastData = $fData;
@@ -139,11 +138,10 @@ class WeatherApiController implements ContainerInjectableInterface
                 $res = $ipModel->getData();
                 if ($res->latitude && $res->longitude) {
                     $weatherModel = $this->di->get("weather");
-                    if (!isset($fData)) {
+                    if (!isset($fData) || !isset($hData)) {
                         $weatherModel->getForecast($res->latitude, $res->longitude);
-                        $forecastData = $weatherModel->getForecastData();
-                    } else if (!isset($hData)) {
                         $weatherModel->getHistory($res->latitude, $res->longitude);
+                        $forecastData = $weatherModel->getForecastData();
                         $historicalData = $weatherModel->getHistoricalData();
                     } else {
                         $forecastData = $fData;
@@ -163,6 +161,10 @@ class WeatherApiController implements ContainerInjectableInterface
                             "Historical" => $historical ?? ""
                         ];
                     }
+                } else {
+                    $json = [
+                        "Error" => "No location found for IP address!"
+                    ];
                 }
             } else {
                 $json = [

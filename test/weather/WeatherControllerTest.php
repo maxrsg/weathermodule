@@ -131,56 +131,56 @@ class WeatherControllerTest extends TestCase
     /**
      * Test the post
      */
-    // public function testIndexActionPostValidIp()
-    // {
-    //     // Setup of the controller
-    //     $controller = new WeatherController();
-    //     $controller->setDI($this->di);
-    //     $request = $this->di->get("request");
+    public function testIndexActionPostValidIp()
+    {
+        // Setup of the controller
+        $controller = new WeatherController();
+        $controller->setDI($this->di);
+        $request = $this->di->get("request");
 
-    //     //test valid ip
-    //     $request->setPost("ip", "194.47.150.9");
-    //     $res = $controller->indexActionPost();
-    //     $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
-    // }
-
-
-
-    /**
-     * Test the post
-     */
-    // public function testIndexActionPostValidLocation()
-    // {
-    //     // Setup of the controller
-    //     $controller = new WeatherController();
-    //     $controller->setDI($this->di);
-    //     $request = $this->di->get("request");
-
-    //     //test valid ip
-    //     $lat = "56.16122055053711";
-    //     $lon = "15.586899757385254";
-    //     $request->setPost("lat", $lat);
-    //     $request->setPost("lon", $lon);
-
-    //     $res = $controller->indexActionPost();
-    //     $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
-    // }
+        //test valid ip
+        $request->setPost("ip", "194.47.150.9");
+        $res = $controller->indexActionPost();
+        $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
+    }
 
 
 
     /**
      * Test the post
      */
-    // public function testGetDataFromInvalidIp()
-    // {
-    //     // Setup of the controller
-    //     $controller = new WeatherController();
-    //     $controller->setDI($this->di);
-    //     $request = $this->di->get("request");
+    public function testIndexActionPostValidLocation()
+    {
+        // Setup of the controller
+        $controller = new WeatherController();
+        $controller->setDI($this->di);
+        $request = $this->di->get("request");
 
-    //     $request->setPost("ip", "abc123");
+        //test valid ip
+        $lat = "56.16122055053711";
+        $lon = "15.586899757385254";
+        $request->setPost("lat", $lat);
+        $request->setPost("lon", $lon);
 
-    //     $res = $controller->indexActionPost();
-    //     $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
-    // }
+        $res = $controller->indexActionPost();
+        $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
+    }
+
+
+
+    /**
+     * Test the post
+     */
+    public function testGetDataFromInvalidIp()
+    {
+        // Setup of the controller
+        $controller = new WeatherController();
+        $controller->setDI($this->di);
+        $request = $this->di->get("request");
+
+        $request->setPost("ip", "abc123");
+
+        $res = $controller->indexActionPost();
+        $this->assertInstanceOf("\Anax\Response\ResponseUtility", $res);
+    }
 }
