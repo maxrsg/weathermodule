@@ -67,7 +67,7 @@ class WeatherControllerTest extends TestCase
 
 
     /**
-     * Test the post
+     * Test getDataFromLocation with valid location data
      */
     public function testGetDataFromLocation()
     {
@@ -97,7 +97,7 @@ class WeatherControllerTest extends TestCase
 
 
     /**
-     * Test the post
+     * Test getDataFromLocation with invalid location data
      */
     public function testGetDataFromInvalidLocation()
     {
@@ -129,7 +129,7 @@ class WeatherControllerTest extends TestCase
 
 
     /**
-     * Test the post
+     * Test posting a valid ip address
      */
     public function testIndexActionPostValidIp()
     {
@@ -147,7 +147,7 @@ class WeatherControllerTest extends TestCase
 
 
     /**
-     * Test the post
+     * Test posting a valid ip address
      */
     public function testIndexActionPostValidLocation()
     {
@@ -169,7 +169,7 @@ class WeatherControllerTest extends TestCase
 
 
     /**
-     * Test the post
+     * Test getDataFromIp with an invalid ip address
      */
     public function testGetDataFromInvalidIp()
     {
